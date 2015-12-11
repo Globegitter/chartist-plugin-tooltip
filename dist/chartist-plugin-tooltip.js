@@ -148,11 +148,14 @@
     };
 
     function show(element) {
-      element.classList.add('tooltip-show');
+      if((' ' + element.className + ' ').indexOf(' ' + tooltip-show + ' ') > -1) {
+        element.className = element.className + ' tooltip-show';
+      }
     }
 
     function hide(element) {
-      element.classList.remove('tooltip-show');
+      var regex = new RegExp('tooltip-show' + '\\s*', 'gi');
+      element.className = element.className.replace(regex, '').trim();
     }
 
     function hasClass(element, className) {
