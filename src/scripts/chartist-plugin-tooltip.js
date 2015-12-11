@@ -132,7 +132,7 @@
   };
 
   function show(element) {
-    if((' ' + element.className + ' ').indexOf(' ' + tooltip-show + ' ') > -1) {
+    if(!hasClass(element, 'tooltip-show')) {
       element.className = element.className + ' tooltip-show';
     }
   }
