@@ -80,7 +80,7 @@ describe('ctPointLabels', function () {
     expect(getTooltip().style.top).toMatch(/^\d+px$/);
   });
 
-  it('should set additioanl class', function(){
+  it('should set additional class', function(){
     expect(hasClass(getTooltip(), 'foo')).toBe(true);
   });
 });

@@ -68,42 +68,54 @@
         var $point = event.target;
         var tooltipText = '';
 
-        var meta = $point.getAttribute('ct:meta') || $point.parentNode.getAttribute('ct:meta') || $point.parentNode.getAttribute('ct:series-name') || '';
+        var isPieChart = (chart instanceof Chartist.Pie) ? $point : $point.parentNode;
+        var seriesName = (isPieChart) ? $point.parentNode.getAttribute('ct:meta') || $point.parentNode.getAttribute('ct:series-name') : '';
+        var meta = $point.getAttribute('ct:meta') || seriesName || '';
+        var hasMeta = !!meta;
         var value = $point.getAttribute('ct:value');
 
         if (options.tooltipFnc) {
           tooltipText = options.tooltipFnc(meta, value);
         } else {
-
+          if(options.metaIsHTML){
+            var txt = document.createElement("textarea");
+            txt.innerHTML = meta;
+            meta = txt.value;
+          }
+          
           meta = '<span class="chartist-tooltip-meta">' + meta + '</span>';
-          value = '<span class="chartist-tooltip-value">' + value + '</span>';
 
-          if (meta) {
+          if (hasMeta) {
             tooltipText += meta + '<br>';
           } else {
             // For Pie Charts also take the labels into account
             // Could add support for more charts here as well!
             if (chart instanceof Chartist.Pie) {
               var label = next($point, 'ct-label');
-              if (label.length > 0) {
+              if (label) {
                 tooltipText += text(label) + '<br>';
               }
             }
           }
 
-          if (options.currency) {
-            value = options.currency + value.replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,");
+          if (value) {
+            value = '<span class="chartist-tooltip-value">' + value + '</span>';
+            if (options.currency) {
+              value = options.currency + value.replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,");
+            }
+            tooltipText += value;
           }
-          tooltipText += value;
         }
 
-        $toolTip.innerHTML = tooltipText;
-        setPosition(event);
-        show($toolTip);
+        if(tooltipText) {
+          $toolTip.innerHTML = tooltipText;
+          setPosition(event);
+          show($toolTip);
 
-        // Remember height and width to avoid wrong position in IE
-        height = $toolTip.offsetHeight;
-        width = $toolTip.offsetWidth;
+          // Remember height and width to avoid wrong position in IE
+          height = $toolTip.offsetHeight;
+          width = $toolTip.offsetWidth;
+        }
       });
 
       on('mouseout', tooltipSelector, function () {
