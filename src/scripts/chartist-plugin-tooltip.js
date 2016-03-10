@@ -15,14 +15,6 @@
     appendToBody: false,
     class: undefined,
     pointClass: 'ct-point'
-    // showTooltips: true,
-    // tooltipEvents: ['mousemove', 'touchstart', 'touchmove'],
-    // labelClass: 'ct-label',
-    // labelOffset: {
-    //   x: 0,
-    //   y: -10
-    // },
-    // textAnchor: 'middle'
   };
 
   Chartist.plugins = Chartist.plugins || {};
@@ -75,10 +67,14 @@
         var hasMeta = !!meta;
         var value = $point.getAttribute('ct:value');
 
-        if (options.tooltipFnc) {
+        if (options.transformTooltipTextFnc && typeof options.transformTooltipTextFnc === 'function') {
+          value = options.transformTooltipTextFnc(value);
+        }
+
+        if (options.tooltipFnc && typeof options.tooltipFnc === 'function') {
           tooltipText = options.tooltipFnc(meta, value);
         } else {
-          if(options.metaIsHTML){
+          if (options.metaIsHTML) {
             var txt = document.createElement("textarea");
             txt.innerHTML = meta;
             meta = txt.value;

@@ -12,6 +12,8 @@ var defaultOptions = {
   //e.g. 4000 => €4,000
   tooltipFnc: undefined, //accepts function
   //build custom tooltip
+  transformTooltipTextFnc: undefined, // accepts function
+  // transform tooltip text
   class: undefined, // accecpts 'class1', 'class1 class2', etc.
   //adds class(es) to tooltip wrapper
   appendToBody: false //accepts true or false
