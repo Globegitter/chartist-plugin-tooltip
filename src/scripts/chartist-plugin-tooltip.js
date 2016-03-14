@@ -128,17 +128,22 @@
       });
 
       function setPosition(event) {
-        // For some reasons, on FF, we can't rely on event.offsetX and event.offsetY,
-        // that's why we prioritize event.layerX and event.layerY
-        // see https://github.com/gionkunz/chartist-js/issues/381
         height = height || $toolTip.offsetHeight;
         width = width || $toolTip.offsetWidth;
+        var offsetX = - width / 2 + options.tooltipOffset.x
+        var offsetY = - height + options.tooltipOffset.y;
+        
         if (!options.appendToBody) {
-          $toolTip.style.top = (event.layerY || event.offsetY) - height + options.tooltipOffset.y + 'px';
-          $toolTip.style.left = (event.layerX || event.offsetX) - width / 2 + options.tooltipOffset.x + 'px';
+          var box = $chart.getBoundingClientRect();
+          var left = event.pageX - box.left - window.pageXOffset ;
+          var top = event.pageY - box.top - window.pageYOffset ;
+
+          $toolTip.style.top = top + offsetY + 'px';
+          $toolTip.style.left = left + offsetX + 'px';
+          
         } else {
-          $toolTip.style.top = event.pageY - height  + options.tooltipOffset.y + 'px';
-          $toolTip.style.left = event.pageX - width / 2 + options.tooltipOffset.x + 'px';
+          $toolTip.style.top = event.pageY + offsetY + 'px';
+          $toolTip.style.left = event.pageX + offsetX + 'px';
         }
       }
     }

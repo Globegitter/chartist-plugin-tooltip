@@ -73,13 +73,13 @@ describe('ctPointLabels', function () {
   });
 
   it('should set tooltip position', function() {
-    event.layerX = 100;
-    event.layerY = 200;
+    event.pageX = 100;
+    event.pageY = 200;
     listeners['mousemove'](event);
     expect(getTooltip().style.left).toMatch(/^\d+px$/);
     expect(getTooltip().style.top).toMatch(/^\d+px$/);
   });
-
+  
   it('should set additional class', function(){
     expect(hasClass(getTooltip(), 'foo')).toBe(true);
   });
