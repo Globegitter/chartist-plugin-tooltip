@@ -12,6 +12,7 @@
       x: 0,
       y: -20
     },
+    anchorToPoint: false,
     appendToBody: false,
     class: undefined,
     pointClass: 'ct-point'
@@ -120,7 +121,8 @@
       });
 
       on('mousemove', null, function (event) {
-        setPosition(event);
+        if (false === options.anchorToPoint)
+          setPosition(event);
       });
 
       function setPosition(event) {
@@ -128,15 +130,20 @@
         width = width || $toolTip.offsetWidth;
         var offsetX = - width / 2 + options.tooltipOffset.x
         var offsetY = - height + options.tooltipOffset.y;
+        var anchorX, anchorY;
         
         if (!options.appendToBody) {
           var box = $chart.getBoundingClientRect();
           var left = event.pageX - box.left - window.pageXOffset ;
           var top = event.pageY - box.top - window.pageYOffset ;
 
-          $toolTip.style.top = top + offsetY + 'px';
-          $toolTip.style.left = left + offsetX + 'px';
-          
+          if (true === options.anchorToPoint && event.target.x2 && event.target.y2) {
+            anchorX = parseInt(event.target.x2.baseVal.value);
+            anchorY = parseInt(event.target.y2.baseVal.value);
+          }
+
+          $toolTip.style.top = (anchorY || top) + offsetY + 'px';
+          $toolTip.style.left = (anchorX || left) + offsetX + 'px';
         } else {
           $toolTip.style.top = event.pageY + offsetY + 'px';
           $toolTip.style.left = event.pageX + offsetX + 'px';

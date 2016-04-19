@@ -16,6 +16,8 @@ var defaultOptions = {
   // transform tooltip text
   class: undefined, // accecpts 'class1', 'class1 class2', etc.
   //adds class(es) to tooltip wrapper
+  anchorToPoint: false, //accepts true or false
+  //tooltips do not follow mouse movement -- they are anchored to the point / bar.
   appendToBody: false //accepts true or false
   //appends tooltips to body instead of chart container
 };
