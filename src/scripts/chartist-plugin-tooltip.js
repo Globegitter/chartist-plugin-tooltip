@@ -75,7 +75,7 @@
           tooltipText = options.tooltipFnc(meta, value);
         } else {
           if (options.metaIsHTML) {
-            var txt = document.createElement("textarea");
+            var txt = document.createElement('textarea');
             txt.innerHTML = meta;
             meta = txt.value;
           }
@@ -97,7 +97,7 @@
 
           if (value) {
             if (options.currency) {
-              value = options.currency + value.replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,");
+              value = options.currency + value.replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,');
             }
             value = '<span class="chartist-tooltip-value">' + value + '</span>';
             tooltipText += value;
