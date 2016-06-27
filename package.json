@@ -54,7 +54,7 @@
     "test": "grunt test"
   },
   "config": {
-    "banner": "/* chartist-plugin-pointlabels <%= pkg.version %>\n * Copyright © <%= year %> Gion Kunz\n * Free to use under the WTFPL license.\n * http://www.wtfpl.net/\n */\n",
+    "banner": "/* chartist-plugin-tooltip <%= pkg.version %>\n * Copyright © <%= year %> Markus Padourek\n * Free to use under the WTFPL license.\n * http://www.wtfpl.net/\n */\n",
     "src": "src",
     "dist": "dist",
     "tmp": ".tmp",
