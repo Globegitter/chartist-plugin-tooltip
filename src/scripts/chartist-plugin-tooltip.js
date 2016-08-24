@@ -8,6 +8,7 @@
 
   var defaultOptions = {
     currency: undefined,
+    currencyFormatCallback: undefined,
     tooltipOffset: {
       x: 0,
       y: -20
@@ -131,7 +132,7 @@
         var offsetX = - width / 2 + options.tooltipOffset.x
         var offsetY = - height + options.tooltipOffset.y;
         var anchorX, anchorY;
-        
+
         if (!options.appendToBody) {
           var box = $chart.getBoundingClientRect();
           var left = event.pageX - box.left - window.pageXOffset ;
