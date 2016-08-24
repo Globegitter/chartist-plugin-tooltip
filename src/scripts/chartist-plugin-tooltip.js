@@ -99,7 +99,11 @@
 
           if (value) {
             if (options.currency) {
-              value = options.currency + value.replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,');
+              if (options.currencyFormatCallback != undefined) {
+                value = options.currencyFormatCallback(value, options);
+              } else {
+                value = options.currency + value.replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,');
+              }
             }
             value = '<span class="chartist-tooltip-value">' + value + '</span>';
             tooltipText += value;
