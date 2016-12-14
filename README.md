@@ -22,6 +22,12 @@ var defaultOptions = {
   //tooltips do not follow mouse movement -- they are anchored to the point / bar.
   appendToBody: false //accepts true or false
   //appends tooltips to body instead of chart container
+  includeValue: true //accepts true or false
+  //Whether the append the value to the end of the tooltip if the meta is defined
+  includeValueBreak: true //accepts true or false
+  //Whether to include the linebreak between the meta and the value
+  metaIsHTML: false //accepts true or false
+  //Whether to parse the meta value as HTML or plain text
 };
 ```
 
