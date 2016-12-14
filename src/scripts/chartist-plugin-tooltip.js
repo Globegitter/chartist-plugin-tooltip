@@ -16,6 +16,9 @@
     anchorToPoint: false,
     appendToBody: false,
     class: undefined,
+    includeValue: true,
+    includeValueBreak: true,
+    metaIsHTML: false,
     pointClass: 'ct-point'
   };
 
@@ -85,19 +88,25 @@
           meta = '<span class="chartist-tooltip-meta">' + meta + '</span>';
 
           if (hasMeta) {
-            tooltipText += meta + '<br>';
+            tooltipText += meta;
+            if (options.includeValue && options.includeValueBreak && value) {
+              tooltipText += '<br>';
+            }
           } else {
             // For Pie Charts also take the labels into account
             // Could add support for more charts here as well!
             if (chart instanceof Chartist.Pie) {
               var label = next($point, 'ct-label');
               if (label) {
-                tooltipText += text(label) + '<br>';
+                tooltipText += text(label);
+                if (options.includeValue && options.includeValueBreak && value) {
+                  tooltipText += '<br>';
+                }
               }
             }
           }
 
-          if (value) {
+          if (options.includeValue && value) {
             if (options.currency) {
               if (options.currencyFormatCallback != undefined) {
                 value = options.currencyFormatCallback(value, options);
