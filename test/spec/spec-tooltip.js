@@ -25,7 +25,7 @@ describe('ctPointLabels', function () {
       listeners[event] = listener;
     }
 
-    var tooltip = window.Chartist.plugins.tooltip({class: 'foo'});
+    var tooltip = window.Chartist.plugins.tooltips({class: 'foo'});
     tooltip(chart);
   });
 
@@ -38,7 +38,7 @@ describe('ctPointLabels', function () {
   }
 
   it('should be defined in chartist', function () {
-    expect(window.Chartist.plugins.tooltip).toBeDefined();
+    expect(window.Chartist.plugins.tooltips).toBeDefined();
   });
 
   it('should append tooltip', function() {
@@ -47,7 +47,7 @@ describe('ctPointLabels', function () {
 
   it('should not append tooltip twice', function() {
     expect(getTooltip()).toBeDefined();
-    window.Chartist.plugins.tooltip()(chart);
+    window.Chartist.plugins.tooltips()(chart);
     var all = chart.container.querySelectorAll('div.chartist-tooltip');
     expect(all.length).toBe(1);
   });
