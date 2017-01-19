@@ -74,7 +74,7 @@
         }
 
         if (options.tooltipFnc && typeof options.tooltipFnc === 'function') {
-          tooltipText = options.tooltipFnc(meta, value);
+          tooltipText = options.tooltipFnc(meta, value, $point);
         } else {
           if (options.metaIsHTML) {
             var txt = document.createElement('textarea');
@@ -145,6 +145,16 @@
           if (true === options.anchorToPoint && event.target.x2 && event.target.y2) {
             anchorX = parseInt(event.target.x2.baseVal.value);
             anchorY = parseInt(event.target.y2.baseVal.value);
+          }
+
+          // Prevent tooltip to appear outside of the chart right side
+          if (left > box.width - $toolTip.offsetHeight) {
+            left  = box.width - $toolTip.offsetHeight;
+          }
+
+          // Prevent tooltip to appear outside of the chart left side
+          if ((left + offsetX) < 0) {
+            offsetX = - left;
           }
 
           $toolTip.style.top = (anchorY || top) + offsetY + 'px';

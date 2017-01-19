@@ -90,7 +90,7 @@
           }
 
           if (options.tooltipFnc && typeof options.tooltipFnc === 'function') {
-            tooltipText = options.tooltipFnc(meta, value);
+            tooltipText = options.tooltipFnc(meta, value, $point);
           } else {
             if (options.metaIsHTML) {
               var txt = document.createElement('textarea');
