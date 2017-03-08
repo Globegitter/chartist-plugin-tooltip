@@ -10,7 +10,7 @@
     // like Node.
     module.exports = factory(require("chartist"));
   } else {
-    root['Chartist.plugins.tooltips'] = factory(Chartist);
+    root['Chartist.plugins.tooltip'] = factory(Chartist);
   }
 }(this, function (Chartist) {
 
@@ -90,7 +90,7 @@
           }
 
           if (options.tooltipFnc && typeof options.tooltipFnc === 'function') {
-            tooltipText = options.tooltipFnc(meta, value, event.target);
+            tooltipText = options.tooltipFnc(meta, value);
           } else {
             if (options.metaIsHTML) {
               var txt = document.createElement('textarea');
@@ -201,6 +201,6 @@
 
   } (window, document, Chartist));
 
-  return Chartist.plugins.tooltips;
+  return Chartist.plugins.tooltip;
 
 }));
