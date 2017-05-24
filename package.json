@@ -1,15 +1,15 @@
 {
-  "name": "chartist-plugin-tooltips",
-  "description": "Point Labels Plugin for Chartist.js",
-  "version": "0.0.17",
-  "author": "Markus Padourek",
-  "homepage": "https://github.com/Globegitter/chartist-plugin-tooltip",
+  "name": "chartist-plugin-screentips",
+  "description": "Screen tips Plugin for Chartist.js",
+  "version": "0.0.19",
+  "author": "Markus Padourek (upgraded by Develoger)",
+  "homepage": "https://github.com/radojesrb/chartist-plugin-tooltip",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Globegitter/chartist-plugin-tooltip.git"
+    "url": "git+https://github.com/radojesrb/chartist-plugin-tooltip.git"
   },
   "bugs": {
-    "url": "https://github.com/Globegitter/chartist-plugin-tooltip/issues"
+    "url": "https://github.com/radojesrb/chartist-plugin-tooltip/issues"
   },
   "keywords": [
     "chartist",
@@ -27,7 +27,7 @@
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/Globegitter/chartist-plugin-tooltip/blob/master/LICENSE"
+      "url": "https://github.com/radojesrb/chartist-plugin-tooltip/blob/master/LICENSE"
     }
   ],
   "dependencies": {},

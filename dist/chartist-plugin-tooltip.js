@@ -10,7 +10,7 @@
     // like Node.
     module.exports = factory(require("chartist"));
   } else {
-    root['Chartist.plugins.tooltips'] = factory(Chartist);
+    root['Chartist.plugins.tooltip'] = factory(Chartist);
   }
 }(this, function (Chartist) {
 
@@ -40,15 +40,18 @@
       options = Chartist.extend({}, defaultOptions, options);
 
       return function tooltip(chart) {
-        var tooltipSelector = options.pointClass;
+        // go trough the dataset and set tooltip content for each data point
+        updateTooltipContentFromDataset(chart);
+
+        var tooltipSelector;
         if (chart instanceof Chartist.Bar) {
-          tooltipSelector = 'ct-bar';
+          tooltipSelector = options.pointClass || 'ct-bar';
         } else if (chart instanceof Chartist.Pie) {
           // Added support for donut graph
           if (chart.options.donut) {
-            tooltipSelector = 'ct-slice-donut';
+            tooltipSelector = options.pointClass || 'ct-slice-donut';
           } else {
-            tooltipSelector = 'ct-slice-pie';
+            tooltipSelector = options.pointClass || 'ct-slice-pie';
           }
         }
 
@@ -76,43 +79,17 @@
         }
 
         on('mouseover', tooltipSelector, function (event) {
-          var $point = event.target;
+          var $point = (chart.options.donut) ? event.target.parentNode : event.target;
           var tooltipText = '';
-
-          var isPieChart = (chart instanceof Chartist.Pie) ? $point : $point.parentNode;
-          var seriesName = (isPieChart) ? $point.parentNode.getAttribute('ct:meta') || $point.parentNode.getAttribute('ct:series-name') : '';
-          var meta = $point.getAttribute('ct:meta') || seriesName || '';
-          var hasMeta = !!meta;
-          var value = $point.getAttribute('ct:value');
+          var value = $point.getAttribute('data-tooltip');
 
           if (options.transformTooltipTextFnc && typeof options.transformTooltipTextFnc === 'function') {
             value = options.transformTooltipTextFnc(value);
           }
 
           if (options.tooltipFnc && typeof options.tooltipFnc === 'function') {
-            tooltipText = options.tooltipFnc(meta, value, event.target);
+            tooltipText = options.tooltipFnc(meta, value);
           } else {
-            if (options.metaIsHTML) {
-              var txt = document.createElement('textarea');
-              txt.innerHTML = meta;
-              meta = txt.value;
-            }
-
-            meta = '<span class="chartist-tooltip-meta">' + meta + '</span>';
-
-            if (hasMeta) {
-              tooltipText += meta + '<br>';
-            } else {
-              // For Pie Charts also take the labels into account
-              // Could add support for more charts here as well!
-              if (chart instanceof Chartist.Pie) {
-                var label = next($point, 'ct-label');
-                if (label) {
-                  tooltipText += text(label) + '<br>';
-                }
-              }
-            }
-
             if (value) {
               if (options.currency) {
                 if (options.currencyFormatCallback != undefined) {
@@ -171,6 +148,33 @@
           }
         }
       }
+
+      function updateTooltipContentFromDataset(chart) {
+        chart.on('draw', function(data) {
+          var series = data.series,
+              index = data.index,
+              dataElement = data.element,
+              dataPoint,
+              tooltipContent;
+
+          if (data.type === 'bar') {
+            dataPoint = series[index];
+            // assign tooltip content value either from tooltip propetry or from value
+            tooltipContent = dataPoint.tooltip || dataPoint.value;
+            dataElement.attr({
+              'data-tooltip': tooltipContent
+            });
+          } else if (data.type === 'slice') {
+            // donut support
+            dataPoint = series;
+            tooltipContent = dataPoint.tooltip || dataPoint.value;
+            // get data element, required to set tooltip content to its parent
+            dataElement = document.querySelector('.' + dataElement._node.getAttribute('class') + '[value="' + dataPoint.value + '"]');
+            var dataElementGroup = dataElement.parentNode;
+            dataElementGroup.setAttribute('data-tooltip', tooltipContent);
+          }
+        });
+      }
     };
 
     function show(element) {
@@ -201,6 +205,6 @@
 
   } (window, document, Chartist));
 
-  return Chartist.plugins.tooltips;
+  return Chartist.plugins.tooltip;
 
 }));
