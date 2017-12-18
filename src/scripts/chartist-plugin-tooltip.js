@@ -1,7 +1,7 @@
 /**
-* Chartist.js plugin to display a data label on top of the points in a line chart.
-*
-*/
+ * Chartist.js plugin to display a data label on top of the points in a line chart.
+ *
+ */
 /* global Chartist */
 (function (window, document, Chartist) {
   'use strict';
@@ -11,8 +11,9 @@
     currencyFormatCallback: undefined,
     tooltipOffset: {
       x: 0,
-      y: -20
+      y: 0
     },
+    tooltipPlacement: 'top-right', // 'top-right', 'bottom-right', 'top-left', 'bottom-left', 'top-center', 'bottom-center'
     anchorToPoint: false,
     appendToBody: false,
     class: undefined,
@@ -20,7 +21,7 @@
   };
 
   Chartist.plugins = Chartist.plugins || {};
-  Chartist.plugins.tooltip = function (options) {
+  Chartist.plugins.customTooltip = function (options) {
     options = Chartist.extend({}, defaultOptions, options);
 
     return function tooltip(chart) {
@@ -55,7 +56,7 @@
       function on(event, selector, callback) {
         $chart.addEventListener(event, function (e) {
           if (!selector || hasClass(e.target, selector))
-          callback(e);
+            callback(e);
         });
       }
 
@@ -127,26 +128,50 @@
 
       on('mousemove', null, function (event) {
         if (false === options.anchorToPoint)
-        setPosition(event);
+          setPosition(event);
       });
 
       function setPosition(event) {
         height = height || $toolTip.offsetHeight;
         width = width || $toolTip.offsetWidth;
-        var offsetX = - width / 2 + options.tooltipOffset.x
-        var offsetY = - height + options.tooltipOffset.y;
-        var anchorX, anchorY;
 
+        var offsetX, offsetY, anchorX, anchorY;
+
+        switch (options.tooltipPlacement) {
+          case 'top-right':
+            offsetX = options.tooltipOffset.x;
+            offsetY = options.tooltipOffset.y;
+            break;
+          case 'bottom-right':
+            offsetX = options.tooltipOffset.x;
+            offsetY = -height + options.tooltipOffset.y;
+            break;
+          case 'top-left':
+            offsetX = -width + options.tooltipOffset.x;
+            offsetY = options.tooltipOffset.y;
+            break;
+          case 'bottom-left':
+            offsetX = -width + options.tooltipOffset.x;
+            offsetY = -height + options.tooltipOffset.y;
+            break;
+          case 'top-center':
+            offsetX = -width/2 + options.tooltipOffset.x;
+            offsetY = options.tooltipOffset.y;
+            break;
+          case 'bottom-center':
+            offsetX = -width/2 + options.tooltipOffset.x;
+            offsetY = -height + options.tooltipOffset.y;
+            break;
+        }
         if (!options.appendToBody) {
           var box = $chart.getBoundingClientRect();
-          var left = event.pageX - box.left - window.pageXOffset ;
-          var top = event.pageY - box.top - window.pageYOffset ;
+          var left = event.pageX - box.left - window.pageXOffset;
+          var top = event.pageY - box.top - window.pageYOffset;
 
           if (true === options.anchorToPoint && event.target.x2 && event.target.y2) {
             anchorX = parseInt(event.target.x2.baseVal.value);
             anchorY = parseInt(event.target.y2.baseVal.value);
           }
-
           $toolTip.style.top = (anchorY || top) + offsetY + 'px';
           $toolTip.style.left = (anchorX || left) + offsetX + 'px';
         } else {
