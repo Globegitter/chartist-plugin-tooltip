@@ -152,9 +152,8 @@
           // donut support
           dataPoint = series;
           tooltipContent = dataPoint.tooltip || dataPoint.value;
-          // get data element, required to set tooltip content to its parent
-          dataElement = document.querySelector('.' + dataElement._node.getAttribute('class') + '[value="' + dataPoint.value + '"]');
-          var dataElementGroup = dataElement.parentNode;
+          // get parent node of dataElement node
+          var dataElementGroup = data.group.getNode();
           dataElementGroup.setAttribute('data-tooltip', tooltipContent);
         }
       });

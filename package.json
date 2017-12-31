@@ -1,15 +1,15 @@
 {
-  "name": "chartist-plugin-screentips",
+  "name": "chartist-plugin-screentips-custom",
   "description": "Screen tips Plugin for Chartist.js",
   "version": "0.0.19",
   "author": "Markus Padourek (upgraded by Develoger)",
   "homepage": "https://github.com/radojesrb/chartist-plugin-tooltip",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/radojesrb/chartist-plugin-tooltip.git"
+    "url": "git+https://github.com/claudiobmgrtnr/chartist-plugin-tooltip.git"
   },
   "bugs": {
-    "url": "https://github.com/radojesrb/chartist-plugin-tooltip/issues"
+    "url": "https://github.com/claudiobmgrtnr/chartist-plugin-tooltip/issues"
   },
   "keywords": [
     "chartist",
