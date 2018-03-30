@@ -31,3 +31,6 @@ bower_components
 
 #Sass Cache
 .sass-cache
+
+#Idea files
+.idea
