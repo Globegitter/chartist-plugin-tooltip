@@ -22,8 +22,10 @@ var defaultOptions = {
   //adds class(es) to tooltip wrapper
   anchorToPoint: false, //accepts true or false
   //tooltips do not follow mouse movement -- they are anchored to the point / bar.
-  appendToBody: false //accepts true or false
+  appendToBody: false, //accepts true or false
   //appends tooltips to body instead of chart container
+  labelTooltipValue: undefined //accepts a function with the label text as a parameter
+  //appends tooltips to bar charts labels with the return value of the function
 };
 ```
 
