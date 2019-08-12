@@ -150,7 +150,7 @@
 
             if (options.tooltipFnc && typeof options.tooltipFnc === 'function') {
               tooltipText = options.tooltipFnc(label, value);
-            } else {
+            } else if (label) {
               label = '<span class="chartist-tooltip-meta">' + label + '</span>';
 
               if (label) {
