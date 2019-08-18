@@ -12,20 +12,22 @@ NPM package: https://www.npmjs.com/package/chartist-plugin-tooltips
 
 ```javascript
 var defaultOptions = {
-  currency: undefined, //accepts '£', '$', '€', etc.
-  //e.g. 4000 => €4,000
-  tooltipFnc: undefined, //accepts function
-  //build custom tooltip
+  currency: undefined, // accepts '£', '$', '€', etc.
+  // e.g. 4000 => €4,000
+  tooltipFnc: undefined, // accepts function
+  // build custom tooltip
   transformTooltipTextFnc: undefined, // accepts function
   // transform tooltip text
   class: undefined, // accecpts 'class1', 'class1 class2', etc.
-  //adds class(es) to tooltip wrapper
-  anchorToPoint: false, //accepts true or false
-  //tooltips do not follow mouse movement -- they are anchored to the point / bar.
-  appendToBody: false, //accepts true or false
-  //appends tooltips to body instead of chart container
-  labelTooltipValue: undefined //accepts a function with the label text as a parameter
-  //appends tooltips to bar charts labels with the return value of the function
+  // adds class(es) to tooltip wrapper
+  anchorToPoint: false, // accepts true or false
+  // tooltips do not follow mouse movement -- they are anchored to the point / bar.
+  appendToBody: false, // accepts true or false
+  // appends tooltips to body instead of chart container
+  labelTooltipValue: undefined, // accepts a function with the label text as a parameter
+  // appends tooltips to bar charts labels with the return value of the function
+  transformLabelTooltipTextFnc: undefined // accepts a function with the label text as a parameter
+  // transform label tooltip text
 };
 ```
 

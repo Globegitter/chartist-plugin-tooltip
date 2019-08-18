@@ -135,8 +135,12 @@
           if (options.tooltipFnc && typeof options.tooltipFnc === 'function') {
             tooltipText = options.tooltipFnc(label, value);
           } else if (label) {
-            label = '<span class="chartist-tooltip-meta">' + label + '</span>';
-
+            if (options.transformLabelTooltipTextFnc && typeof options.transformLabelTooltipTextFnc === 'function') {
+              const transformedLabel = options.transformLabelTooltipTextFnc(label);
+              label = '<span class="chartist-tooltip-meta">' + transformedLabel + '</span>';
+            } else {
+              label = '<span class="chartist-tooltip-meta">' + label + '</span>';
+            }
             if (label) {
               tooltipText += label + '<br>';
             }
