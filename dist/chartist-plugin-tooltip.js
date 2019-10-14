@@ -141,6 +141,52 @@
           hide($toolTip);
         });
 
+        if (options.labelTooltipValue && chart instanceof Chartist.Bar) {
+          on('mouseover', chart.options.classNames.end, function(event) {
+            var tooltipText = '';
+            var label = event.target.innerHTML;
+            var value = typeof options.labelTooltipValue === 'function' && options.labelTooltipValue(label);
+            var hasValue = !!value;
+
+            if (options.tooltipFnc && typeof options.tooltipFnc === 'function') {
+              tooltipText = options.tooltipFnc(label, value);
+            } else if (label) {
+              label = '<span class="chartist-tooltip-meta">' + label + '</span>';
+
+              if (label) {
+                tooltipText += label + '<br>';
+              }
+
+              if (hasValue) {
+                if (options.currency) {
+                  if (options.currencyFormatCallback != undefined) {
+                    value = options.currencyFormatCallback(value, options);
+                  } else {
+                    value = options.currency + value.replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,');
+                  }
+                }
+                value = '<span class="chartist-tooltip-value">' + value + '</span>';
+                tooltipText += value;
+              }
+            }
+
+            if(tooltipText) {
+              $toolTip.innerHTML = tooltipText;
+              setPosition(event);
+              show($toolTip);
+
+              // Remember height and width to avoid wrong position in IE
+              height = $toolTip.offsetHeight;
+              width = $toolTip.offsetWidth;
+            }
+
+          });
+
+          on('mouseout', chart.options.classNames.end, function () {
+            hide($toolTip);
+          });
+        }
+
         on('mousemove', null, function (event) {
           if (false === options.anchorToPoint)
           setPosition(event);
