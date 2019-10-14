@@ -1,5 +1,5 @@
 .chartist-tooltip {
-  position: absolute;
+  position: relative;
   display: inline-block;
   opacity: 0;
   min-width: 5em;
