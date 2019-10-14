@@ -14,8 +14,14 @@ NPM package: https://www.npmjs.com/package/chartist-plugin-tooltips
 var defaultOptions = {
   currency: undefined, //accepts '£', '$', '€', etc.
   //e.g. 4000 => €4,000
+  currencyFormatCallback: undefined, // accepts function
+  // custom currency format
   tooltipFnc: undefined, //accepts function
   //build custom tooltip
+  tooltipOffset: {
+    x: 0,
+    y: -20
+  }, // accepts numbers
   transformTooltipTextFnc: undefined, // accepts function
   // transform tooltip text
   class: undefined, // accecpts 'class1', 'class1 class2', etc.
@@ -133,11 +139,9 @@ chart.on('draw', function(data) {
 
 ```javascript
 plugins: [
-      Chartist.plugins.tooltip({
-        appendToBody: true,
-        pointClass: 'my-cool-point'
-      })
-
-    ]
-
+  Chartist.plugins.tooltip({
+    appendToBody: true,
+    pointClass: 'my-cool-point'
+  })
+]
 ```
