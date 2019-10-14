@@ -16,7 +16,13 @@
     anchorToPoint: false,
     appendToBody: false,
     class: undefined,
-    pointClass: 'ct-point'
+    pointClass: 'ct-point',
+    showOnClick: false,
+    showValue: true,
+    position: {
+      y: 'top',
+      x: 'center'
+    }
   };
 
   Chartist.plugins = Chartist.plugins || {};
@@ -25,10 +31,9 @@
 
     return function tooltip(chart) {
       var tooltipSelector = options.pointClass;
-      if (chart.constructor.name == Chartist.Bar.prototype.constructor.name) {
+      if (chart instanceof Chartist.Bar) {
         tooltipSelector = 'ct-bar';
-      } else if (chart.constructor.name ==  Chartist.Pie.prototype.constructor.name) {
-        // Added support for donut graph
+      } else if (chart instanceof Chartist.Pie) {
         if (chart.options.donut) {
           // Added support or SOLID donut graph
           tooltipSelector = chart.options.donutSolid ? 'ct-slice-donut-solid' : 'ct-slice-donut';
@@ -60,7 +65,10 @@
         });
       }
 
-      on('mouseover', tooltipSelector, function (event) {
+      var fireEvent = options.showOnClick ? 'click' : 'mouseover';
+
+      on(fireEvent, tooltipSelector, function (event) {
+        options.showOnClick && event.stopPropagation();
         var $point = event.target;
         var tooltipText = '';
 
@@ -86,19 +94,19 @@
           meta = '<span class="chartist-tooltip-meta">' + meta + '</span>';
 
           if (hasMeta) {
-            tooltipText += meta + '<br>';
+            tooltipText += meta + (options.showValue ? '<br>' : '');
           } else {
             // For Pie Charts also take the labels into account
             // Could add support for more charts here as well!
             if (chart instanceof Chartist.Pie) {
               var label = next($point, 'ct-label');
               if (label) {
-                tooltipText += text(label) + '<br>';
+                tooltipText += text(label) + (options.showValue ? '<br>' : '');
               }
             }
           }
 
-          if (value) {
+          if (value && options.showValue) {
             if (options.currency) {
               if (options.currencyFormatCallback != undefined) {
                 value = options.currencyFormatCallback(value, options);
@@ -122,20 +130,46 @@
         }
       });
 
-      on('mouseout', tooltipSelector, function () {
-        hide($toolTip);
-      });
+      if (!options.showOnClick) {
+        on('mouseout', tooltipSelector, function () {
+          hide($toolTip);
+        });
 
-      on('mousemove', null, function (event) {
-        if (false === options.anchorToPoint)
-        setPosition(event);
-      });
+        on('mousemove', null, function (event) {
+          if (false === options.anchorToPoint)
+            setPosition(event);
+        });
+      } else {
+        document.addEventListener('click', function (e) {
+          hide($toolTip);
+        });
+      }
 
       function setPosition(event) {
         height = height || $toolTip.offsetHeight;
         width = width || $toolTip.offsetWidth;
-        var offsetX = - width / 2 + options.tooltipOffset.x
-        var offsetY = - height + options.tooltipOffset.y;
+
+
+        var offsetX;
+
+        if (options.position.x == 'left') {
+          offsetX = -width + options.tooltipOffset.x;
+        } else if (options.position.x == 'right') {
+          offsetX = -options.tooltipOffset.x;
+        } else if (options.position.x == 'center') {
+          offsetX = -width / 2 + options.tooltipOffset.x;
+        }
+
+        var offsetY;
+
+        if (options.position.y == 'top') {
+          offsetY = -height + options.tooltipOffset.y;
+        } else if (options.position.y == 'bottom') {
+          offsetY = -options.tooltipOffset.y;
+        } else if (options.position.y == 'middle') {
+          offsetY = -height / 2 + options.tooltipOffset.y;
+        }
+
         var anchorX, anchorY;
 
         if (!options.appendToBody) {

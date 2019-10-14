@@ -22,8 +22,19 @@ var defaultOptions = {
   //adds class(es) to tooltip wrapper
   anchorToPoint: false, //accepts true or false
   //tooltips do not follow mouse movement -- they are anchored to the point / bar.
-  appendToBody: false //accepts true or false
+  appendToBody: false, //accepts true or false
   //appends tooltips to body instead of chart container
+  showOnClick: false,
+  //whether to show the tooltip on click (will show on hover by default)
+  showValue: true,
+  //whether to show the value of the data point inside the tooltip
+  position: {
+    y: 'top',
+    //top, bottom, middle
+    x: 'center'
+    //left, center, right  
+  }
+  //tooltip position against the data point
 };
 ```
 
