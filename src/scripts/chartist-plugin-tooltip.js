@@ -38,7 +38,9 @@
       }
 
       var $chart = chart.container;
-      var $toolTip = $chart.querySelector('.chartist-tooltip');
+      // wehen appendToBody is passed then we need to check if there are any tooltips in the document else
+      // divs were being created for every instance
+      var $toolTip = $chart.querySelector('.chartist-tooltip') || document.querySelector('.chartist-tooltip');
       if (!$toolTip) {
         $toolTip = document.createElement('div');
         $toolTip.className = (!options.class) ? 'chartist-tooltip' : 'chartist-tooltip ' + options.class;
