@@ -25,9 +25,9 @@
 
     return function tooltip(chart) {
       var tooltipSelector = options.pointClass;
-      if (chart.constructor.name == Chartist.Bar.prototype.constructor.name) {
+      if (chart instanceof Chartist.Bar) {
         tooltipSelector = 'ct-bar';
-      } else if (chart.constructor.name ==  Chartist.Pie.prototype.constructor.name) {
+      } else if (chart instanceof Chartist.Pie) {
         // Added support for donut graph
         if (chart.options.donut) {
           // Added support or SOLID donut graph
@@ -137,9 +137,10 @@
         var offsetX = - width / 2 + options.tooltipOffset.x
         var offsetY = - height + options.tooltipOffset.y;
         var anchorX, anchorY;
+        var offsetParent = $chart.offsetParent;
 
-        if (!options.appendToBody) {
-          var box = $chart.getBoundingClientRect();
+        if (!options.appendToBody && offsetParent != document.body) {
+          var box = offsetParent.getBoundingClientRect();
           var left = event.pageX - box.left - window.pageXOffset ;
           var top = event.pageY - box.top - window.pageYOffset ;
 
