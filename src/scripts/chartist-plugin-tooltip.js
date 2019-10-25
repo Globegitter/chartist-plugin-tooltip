@@ -69,13 +69,14 @@
         var meta = $point.getAttribute('ct:meta') || seriesName || '';
         var hasMeta = !!meta;
         var value = $point.getAttribute('ct:value');
+        var index = $point.getAttribute('ct:index');
 
         if (options.transformTooltipTextFnc && typeof options.transformTooltipTextFnc === 'function') {
-          value = options.transformTooltipTextFnc(value);
+          value = options.transformTooltipTextFnc(value, index);
         }
 
         if (options.tooltipFnc && typeof options.tooltipFnc === 'function') {
-          tooltipText = options.tooltipFnc(meta, value);
+          tooltipText = options.tooltipFnc(meta, value, index);
         } else {
           if (options.metaIsHTML) {
             var txt = document.createElement('textarea');
