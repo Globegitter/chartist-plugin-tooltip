@@ -113,12 +113,11 @@
 
         if(tooltipText) {
           $toolTip.innerHTML = tooltipText;
-          setPosition(event);
-          show($toolTip);
-
-          // Remember height and width to avoid wrong position in IE
+          // get and store new height
           height = $toolTip.offsetHeight;
           width = $toolTip.offsetWidth;
+          setPosition(event);
+          show($toolTip);
         }
       });
 
