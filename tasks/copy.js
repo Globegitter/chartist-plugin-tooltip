@@ -23,7 +23,7 @@ module.exports = function (grunt) {
           flatten: true,
           filter: 'isFile',
           dest: '<%= pkg.config.dist %>/',
-          src: 'css/**',
+          src: ['css/**', 'scss/**'],
         }
       ]
     }
