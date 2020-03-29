@@ -25,7 +25,9 @@
 
     return function tooltip(chart) {
       var tooltipSelector = options.pointClass;
-      if (chart.constructor.name == Chartist.Bar.prototype.constructor.name) {
+      if (chart.constructor.name == Chartist.Line.prototype.constructor.name) {
+        tooltipSelector = 'ct-point';
+      } else if (chart.constructor.name == Chartist.Bar.prototype.constructor.name) {
         tooltipSelector = 'ct-bar';
       } else if (chart.constructor.name ==  Chartist.Pie.prototype.constructor.name) {
         // Added support for donut graph
